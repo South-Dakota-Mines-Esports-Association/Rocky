@@ -1,0 +1,27 @@
+services:
+  api:
+    build: https://github.com/South-Dakota-Mines-Esports-Association/Rocky-API.git#main
+    env_file: "api.env"
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+
+  bot:
+    build: https://github.com/South-Dakota-Mines-Esports-Association/Rocky-Bot.git#main
+    restart: unless-stopped
+    env_file: "bot.env"
+
+  db:
+    image: mysql:9.7
+    restart: unless-stopped
+    env_file: "db.env"
+    volumes:
+      - type: bind
+        source: ./scripts
+        target: /docker-entrypoint-initdb.d/
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 2s
+      timeout: 2s
+      retries: 10
