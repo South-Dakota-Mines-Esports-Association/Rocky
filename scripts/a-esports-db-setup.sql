@@ -24,7 +24,6 @@ CREATE TABLE MEMBERS (
   DiscordUserID VARCHAR(32) NOT NULL,
   DiscordUsername VARCHAR(32) NOT NULL,
   AcademicYear ENUM('Freshman','Sophomore','Junior','Senior','Grad') NOT NULL,
-  LastActive DATE,
   PRIMARY KEY (StudentID)
 );
 
